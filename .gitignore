@@ -1,0 +1,12 @@
+# Proto generated code
+/gen/
+
+# buf cache
+.buf/
+
+# IDE/Editor
+*.swp
+*.swo
+*.idea/
+*.vscode/
+*.DS_Store

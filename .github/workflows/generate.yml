@@ -1,0 +1,37 @@
+name: Generate Protos
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "proto/**"
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install buf
+        uses: bufbuild/buf-setup-action@v1
+
+      - name: Generate code
+        run: buf generate
+
+      - name: Commit generated files
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add gen/go
+          git commit -m "chore(proto): regenerate"
+          git push
