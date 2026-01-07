@@ -20,6 +20,10 @@ jobs:
       - name: Buf lint
         run: buf lint
 
+      - name: Fetch base branch
+        run: |
+          git fetch origin ${{ github.base_ref }}
+
       - name: Buf breaking
         run: |
-          buf breaking --against '.git#branch=main'
+          buf breaking --against ".git#branch=origin/${{ github.base_ref }}"
