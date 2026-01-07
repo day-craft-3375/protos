@@ -27,4 +27,4 @@ jobs:
       - name: Buf breaking
         run: |
           buf breaking proto \
-            --against ".git#branch=origin/${{ github.base_ref }}#proto"
+            --against ".git#branch=origin/${{ github.base_ref }}"
