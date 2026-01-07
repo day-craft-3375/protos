@@ -18,13 +18,12 @@ jobs:
         uses: bufbuild/buf-setup-action@v1
 
       - name: Buf lint
-        run: buf lint
-
-      - name: Fetch base branch
-        run: |
-          git fetch origin ${{ github.base_ref }}
+        uses: bufbuild/buf-lint-action@v1
+        with:
+          input: proto
 
       - name: Buf breaking
-        run: |
-          buf breaking proto \
-            --against ".git#branch=origin/${{ github.base_ref }}"
+        uses: bufbuild/buf-breaking-action@v1
+        with:
+          input: proto
+          against: 'https://github.com/${{ github.repository }}.git#branch=${{ github.base_ref }}, subdir=proto'
