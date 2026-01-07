@@ -4,26 +4,26 @@ on:
   pull_request:
     paths:
       - "proto/**"
+      - "buf.yaml"
+      - "buf.gen.yaml"
+      - "buf.lock"
 
 jobs:
   buf-checks:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
 
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Install buf
-        uses: bufbuild/buf-setup-action@v1
-
-      - name: Buf lint
-        uses: bufbuild/buf-lint-action@v1
+      - name: Buf Schema Checks (lint + breaking)
+        uses: bufbuild/buf-action@v1
         with:
           input: proto
-
-      - name: Buf breaking
-        uses: bufbuild/buf-breaking-action@v1
-        with:
-          input: proto
-          against: 'https://github.com/${{ github.repository }}.git#branch=${{ github.base_ref }},subdir=proto'
+          lint: true
+          breaking: true
+          breaking_against: 'https://github.com/${{ github.repository }}.git#branch=${{ github.base_ref }},subdir=proto'
