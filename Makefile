@@ -9,13 +9,13 @@ BUF_CMD := buf
 # Phony targets
 # ========================
 
-.PHONY: all help lint generate buf-install buf-dep-update check-buf
+.PHONY: all help format lint generate buf-install buf-dep-update check-buf
 
 # ========================
 # Default target
 # ========================
 
-all: lint generate
+all: format lint generate
 
 # ========================
 # Help
@@ -40,6 +40,8 @@ check-buf:
 # ========================
 # Commands
 # ========================
+format: check-buf
+	$(BUF_CMD) format -w proto
 
 lint: check-buf
 	$(BUF_CMD) lint

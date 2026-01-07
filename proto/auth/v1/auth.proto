@@ -6,17 +6,17 @@ option go_package = "auth/v1";
 
 // AuthService определяет методы аутентификации пользователей.
 service AuthService {
-    // RegisterUser регистрирует пользователя.
-    rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
+  // RegisterUser регистрирует пользователя.
+  rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
 }
 
 // RegisterUserRequest представляет запрос на регистрацию пользователя.
 message RegisterUserRequest {
-    string email = 1;
-    string password = 2;
+  string email = 1;
+  string password = 2;
 }
 
 // RegisterUserResponse представляет ответ на регистрацию пользователя.
 message RegisterUserResponse {
-    string user_id = 1;
+  string user_id = 1;
 }
