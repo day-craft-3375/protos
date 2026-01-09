@@ -26,4 +26,5 @@ jobs:
           input: proto
           lint: true
           breaking: true
+          format: true
           breaking_against: 'https://github.com/${{ github.repository }}.git#branch=${{ github.base_ref }},subdir=proto'

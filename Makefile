@@ -23,11 +23,12 @@ all: format lint generate
 
 help:
 	@echo "Available targets:"
+	@echo "  make format          Run buf format"
 	@echo "  make lint            Run buf lint"
 	@echo "  make generate        Run buf generate"
 	@echo "  make buf-install     Install buf ($(BUF_VERSION))"
 	@echo "  make buf-dep-update  Update buf dependencies"
-	@echo "  make all             Lint + generate (default)"
+	@echo "  make all             Format + Lint + generate (default)"
 
 # ========================
 # Checks

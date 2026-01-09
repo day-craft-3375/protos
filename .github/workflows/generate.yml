@@ -5,33 +5,33 @@ on:
     branches: [ main ]
     paths:
       - "proto/**"
+      - "buf.yaml"
+      - "buf.gen.yaml"
+      - "buf.lock"
 
 jobs:
   generate:
     runs-on: ubuntu-latest
-
     permissions:
       contents: write
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Install buf
-        uses: bufbuild/buf-setup-action@v1
+      - name: Generate Protobuf code
+        uses: bufbuild/buf-action@v1
+        with:
+          input: proto
+          generate: true
 
-      - name: Generate code
-        run: buf generate
-
-      - name: Commit generated files
-        run: |
-          if git diff --quiet; then
-            echo "No changes to commit"
-            exit 0
-          fi
-
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-
-          git add gen/go
-          git commit -m "chore(proto): regenerate"
-          git push
+      - name: Commit and push generated files if changed
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(proto): regenerate code"
+          commit_user_name: github-actions[bot]
+          commit_user_email: github-actions@github.com
+          commit_author: github-actions[bot] <github-actions@github.com>
+          file_pattern: gen/go/**  # Только файлы в gen/go
+          add_options: "."  # Добавлять изменения относительно корня
