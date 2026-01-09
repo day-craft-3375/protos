@@ -1,12 +1,15 @@
-version: v1
+version: v2
 
 plugins:
-  - plugin: buf.build/protocolbuffers/go
+  - remote: buf.build/protocolbuffers/go
     out: gen/go
     opt:
-      - paths=import
+      - paths=source_relative
 
-  - plugin: buf.build/grpc/go
+  - remote: buf.build/grpc/go
     out: gen/go
     opt:
-      - paths=import
+      - paths=source_relative
+      - require_unimplemented_servers=false
+inputs:
+  - directory: proto
