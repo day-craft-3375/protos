@@ -1,5 +1,5 @@
 # Proto generated code
-/gen/*
+# /gen/*
 
 # buf cache
 .buf/
