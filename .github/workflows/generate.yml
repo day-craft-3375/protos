@@ -13,18 +13,18 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Обязательно для пуша изменений
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Нужно для правильной работы git
+          fetch-depth: 0
 
       - name: Install buf
         uses: bufbuild/buf-setup-action@v1
 
       - name: Generate Protobuf code
-        run: buf generate proto  # Явно указываем input (proto директория)
+        run: buf generate proto
 
       - name: Commit and push generated files if changed
         uses: stefanzweifel/git-auto-commit-action@v5
@@ -33,4 +33,4 @@ jobs:
           commit_user_name: github-actions[bot]
           commit_user_email: github-actions@github.com
           commit_author: github-actions[bot] <github-actions@github.com>
-          file_pattern: gen/go/**  # Коммитим только сгенерированные файлы
+          file_pattern: gen/go/**
